@@ -22,5 +22,13 @@
         exit($e->getMessage());
       }
     }
+
+    public function getAll() {
+      $dbh = $this->dbConnect();
+      $sql = "SELECT * FROM $this->tableName";
+      $stmt = $dbh->query($sql);
+      $result = $stmt->fetchAll();
+      return $result;
+    }
   }
 ?>
