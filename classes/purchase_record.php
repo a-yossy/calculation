@@ -4,15 +4,28 @@
   class PurchaseRecord extends Dbc {
     protected $tableName = 'purchase_record';
 
-    public function purchaseRecordCreate($purchaseRecordParams) {
+    public function purchaseRecordCreate($purchaseRecordParams, $allUser) {
+      $values = "";
+      foreach ($allUser as $user) {
+        $values .= "(:user_id_{$user['id']}, :amount_of_money_{$user['id']}, :purchased_at_{$user['id']}),";
+      }
+      $values = rtrim($values, ",");
       $sql = "INSERT INTO
                 $this->tableName(user_id, amount_of_money, purchased_at)
               VALUES
-                (:user_id, :amount_of_money, :purchased_at)";
+                $values";
       $dbh = $this->dbConnect();
+      $personalExpenditures = $this->calculateAmount($purchaseRecordParams, $allUser);
       $dbh->beginTransaction();
       try {
         $stmt = $dbh->prepare($sql);
+        foreach ($personalExpenditures as $user_id => $amount_of_money) {
+          $stmt->bindValue(":user_id_{$user_id}", $user_id, PDO::PARAM_INT);
+          $stmt->bindValue(":amount_of_money_{$user_id}", $amount_of_money, PDO::PARAM_STR);
+          $stmt->bindValue(":purchased_at_{$user_id}", $purchaseRecordParams['purchased_at'], PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        $dbh->commit();
       } catch (PDOException $e) {
         $dbh->rollBack();
         exit($e->getMessage());
@@ -40,6 +53,20 @@
       }
 
       return $errorMessages;
+    }
+
+    private function calculateAmount($purchaseRecordParams, $allUser) {
+      $sumOfMoney = 0;
+      foreach ($allUser as $user) {
+        $sumOfMoney += $purchaseRecordParams["amount_of_money_{$user['id']}"];
+      }
+
+      $personalExpenditures = array();
+      foreach ($allUser as $user) {
+        $personalExpenditures[$user['id']] = $purchaseRecordParams["amount_of_money_{$user['id']}"] - $sumOfMoney * $user['magnification'];
+      }
+
+      return $personalExpenditures;
     }
   }
 ?>
