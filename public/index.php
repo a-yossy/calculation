@@ -6,6 +6,7 @@
 </head>
 <body>
   <h1>計算アプリ</h1>
-  <h2>ユーザ登録</h2>
+  <h2>TOPページ</h2>
+  <p><a href="/public/user_registration.php">ユーザ登録</a></p>
 </body>
 </html>
