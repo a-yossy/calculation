@@ -4,7 +4,6 @@
   $userParams = $_POST;
   $user = new User();
   $errorMessages = $user->userValidate($userParams);
-  var_dump($userParams);
   if (empty($errorMessages)) {
     $user->userCreate($userParams);
   }
@@ -29,6 +28,6 @@
       <?php endforeach ?>
     <?php endif ?>
   </div>
-  <p><a href="/public/user_registration.php">戻る</a></p>
+  <p><a href="/public/user_new.php">戻る</a></p>
 </body>
 </html>

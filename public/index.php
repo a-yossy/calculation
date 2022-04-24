@@ -15,7 +15,7 @@
 <body>
   <h1>計算アプリ</h1>
   <h2>TOPページ</h2>
-  <p><a href="/public/user_registration.php">ユーザ登録</a></p>
+  <p><a href="/public/user_new.php">ユーザ登録</a></p>
   <table>
     <tr>
       <th>名前</th>
