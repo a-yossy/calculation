@@ -21,7 +21,12 @@
 <body>
   <h1>計算アプリ</h1>
   <h2>購入履歴作成</h2>
-  <p><a href="/public">TOPページ</a></p>
+  <p>
+    <a href="/public">TOPページ</a>
+    <a href="/public/user_new.php">ユーザ登録</a>
+    <a href="/public/purchase_record_new.php">購入履歴登録</a>
+    <a href="/public/purchase_record_index.php">購入履歴一覧</a>
+  </p>
   <div>
     <?php if (empty($errorMessages)): ?>
       <p>購入履歴を作成しました</p>
@@ -31,6 +36,5 @@
       <?php endforeach ?>
     <?php endif ?>
   </div>
-  <p><a href="/public/purchase_record_new.php">戻る</a></p>
 </body>
 </html>
