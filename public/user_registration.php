@@ -15,7 +15,7 @@
     </div>
     <div>
       <p>倍率</p>
-      <input type="number" min="0" max="1" step="0.1">
+      <input type="number" name="magnification" min="0" max="1" step="0.01">
     </div>
     <div>
       <p><input type="submit" value="作成"></p>
