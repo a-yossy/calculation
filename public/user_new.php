@@ -11,11 +11,11 @@
   <form action="/public/user_create.php" method="post">
     <div>
       <p>名前</p>
-      <input type="text" name="name">
+      <input type="text" name="name" required>
     </div>
     <div>
       <p>倍率</p>
-      <input type="number" name="magnification" min="0" max="1" step="0.01">
+      <input type="number" name="magnification" min="0" max="1" step="0.01" required>
     </div>
     <div>
       <p><input type="submit" value="作成"></p>
