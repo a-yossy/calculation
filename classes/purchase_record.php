@@ -40,6 +40,16 @@
       return $result;
     }
 
+    public function getNotCompletedFormerlyPurchaseRecords() {
+      $sql = "SELECT * FROM $this->tableName WHERE is_completed = :is_completed ORDER BY purchased_at, user_id";
+      $dbh = $this->dbConnect();
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindValue(':is_completed', false, PDO::PARAM_BOOL);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      return $result;
+    }
+
     public function purchaseRecordValidate($purchaseRecordParams, $allUser) {
       $errorMessages = array();
       if (empty($purchaseRecordParams['purchased_at'])) {

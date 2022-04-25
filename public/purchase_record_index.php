@@ -31,14 +31,14 @@
       <tr>
         <th>日付</th>
         <?php foreach ($allUsers as $user): ?>
-          <th><?php echo $user['name'] ?></th>
+          <th><?php echo h($user['name']) ?></th>
         <?php endforeach ?>
       </tr>
       <?php foreach ($formerlyPurchaseRecords as $purchasedAt => $purchaseRecord): ?>
         <tr>
-          <td><?php echo $purchasedAt ?></td>
+          <td><?php echo h($purchasedAt) ?></td>
           <?php foreach ($purchaseRecord as $name => $amountOfMoney): ?>
-            <td><?php echo $amountOfMoney ?></td>
+            <td><?php echo h($amountOfMoney) ?></td>
           <?php endforeach ?>
         </tr>
       <?php endforeach ?>
