@@ -3,7 +3,7 @@
   require_once('../lib/security.php');
 
   $user = new User();
-  $allUser = $user->getAll();
+  $allUsers = $user->getAll();
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@
       <th>名前</th>
       <th>倍率</th>
     </tr>
-    <?php foreach($allUser as $user): ?>
+    <?php foreach($allUsers as $user): ?>
       <tr>
         <td><?php echo h($user['name']) ?></td>
         <td><?php echo h($user['magnification']) ?></td>

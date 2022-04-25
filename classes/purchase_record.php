@@ -32,6 +32,14 @@
       }
     }
 
+    public function getFormerlyPurchaseRecords() {
+      $sql = "SELECT * FROM $this->tableName ORDER BY purchased_at, user_id";
+      $dbh = $this->dbConnect();
+      $stmt = $dbh->query($sql);
+      $result = $stmt->fetchAll();
+      return $result;
+    }
+
     public function purchaseRecordValidate($purchaseRecordParams, $allUser) {
       $errorMessages = array();
       if (empty($purchaseRecordParams['purchased_at'])) {
@@ -43,7 +51,7 @@
       }
 
       foreach ($allUser as $user) {
-        if (empty($purchaseRecordParams["amount_of_money_{$user['id']}"])) {
+        if ($purchaseRecordParams["amount_of_money_{$user['id']}"] !== '0' && empty($purchaseRecordParams["amount_of_money_{$user['id']}"])) {
           $errorMessages[] = "{$user['name']}の購入金額を入力して下さい";
         }
 

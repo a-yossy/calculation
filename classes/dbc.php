@@ -30,5 +30,24 @@
       $result = $stmt->fetchAll();
       return $result;
     }
+
+    public function getById($id) {
+      if (empty($id)) {
+        exit('IDが不正です');
+      }
+
+      $dbh = $this->dbConnect();
+      $sql = "SELECT * FROM $this->tableName where id = :id";
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+      $stmt->execute();
+      $result = $stmt->fetch();
+
+      if (!$result) {
+        exit("$this->tableNameのデータがありません");
+      }
+
+      return $result;
+    }
   }
 ?>
