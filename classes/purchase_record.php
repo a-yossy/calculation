@@ -4,7 +4,7 @@
   class PurchaseRecord extends Dbc {
     protected $tableName = 'purchase_record';
 
-    public function purchaseRecordCreate($purchaseRecordParams, $allUser) {
+    public function purchaseRecordsCreate($purchaseRecordParams, $allUser) {
       $values = "";
       foreach ($allUser as $user) {
         $values .= "(:user_id_{$user['id']}, :amount_of_money_{$user['id']}, :purchased_at_{$user['id']}),";

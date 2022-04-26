@@ -8,7 +8,7 @@
   $purchaseRecord = new PurchaseRecord();
   $errorMessages = $purchaseRecord->purchaseRecordValidate($purchaseRecordParams, $allUser);
   if (empty($errorMessages)) {
-    $purchaseRecord->purchaseRecordCreate($purchaseRecordParams, $allUser);
+    $purchaseRecord->purchaseRecordsCreate($purchaseRecordParams, $allUser);
   }
 ?>
 

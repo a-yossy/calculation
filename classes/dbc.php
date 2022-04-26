@@ -25,7 +25,7 @@
 
     public function getAll() {
       $dbh = $this->dbConnect();
-      $sql = "SELECT * FROM $this->tableName";
+      $sql = "SELECT * FROM $this->tableName ORDER BY id";
       $stmt = $dbh->query($sql);
       $result = $stmt->fetchAll();
       return $result;
