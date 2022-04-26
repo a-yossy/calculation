@@ -1,5 +1,5 @@
 <?php
-  require_once('../classes/dbc.php');
+  require_once('dbc.php');
 
   class PurchaseRecord extends Dbc {
     protected $tableName = 'purchase_record';

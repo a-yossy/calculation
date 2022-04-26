@@ -1,6 +1,6 @@
 <?php
-  require_once('../classes/purchase_record.php');
-  require_once('../classes/user.php');
+  require_once('../../classes/purchase_record.php');
+  require_once('../../classes/user.php');
 
   $user = new User();
   $allUser = $user->getAll();
@@ -22,10 +22,10 @@
   <h1>計算アプリ</h1>
   <h2>購入履歴作成</h2>
   <p>
-    <a href="/public">TOPページ</a>
-    <a href="/public/user_new.php">ユーザ登録</a>
-    <a href="/public/purchase_record_new.php">購入履歴登録</a>
-    <a href="/public/purchase_record_index.php">購入履歴一覧</a>
+    <a href="/public/user">TOPページ</a>
+    <a href="/public/user/new.php">ユーザ登録</a>
+    <a href="/public/purchase_record/new.php">購入履歴登録</a>
+    <a href="/public/purchase_record/index.php">購入履歴一覧</a>
   </p>
   <div>
     <?php if (empty($errorMessages)): ?>

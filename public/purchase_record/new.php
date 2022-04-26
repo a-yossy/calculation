@@ -1,6 +1,6 @@
 <?php
-  require_once('../classes/user.php');
-  require_once('../lib/security.php');
+  require_once('../../classes/user.php');
+  require_once('../../lib/security.php');
 
   $user = new User();
   $allUser = $user->getAll();
@@ -16,12 +16,12 @@
   <h1>計算アプリ</h1>
   <h2>購入履歴登録</h2>
   <p>
-    <a href="/public">TOPページ</a>
-    <a href="/public/user_new.php">ユーザ登録</a>
-    <a href="/public/purchase_record_new.php">購入履歴登録</a>
-    <a href="/public/purchase_record_index.php">購入履歴一覧</a>
+    <a href="/public/user">TOPページ</a>
+    <a href="/public/user/new.php">ユーザ登録</a>
+    <a href="/public/purchase_record/new.php">購入履歴登録</a>
+    <a href="/public/purchase_record/index.php">購入履歴一覧</a>
   </p>
-  <form action="/public/purchase_record_create.php" method="post">
+  <form action="/public/purchase_record/create.php" method="post">
     <div>
       <p>購入日時</p>
       <input type="date" name="purchased_at" required max="<?php echo date('Y-m-d') ?>">
