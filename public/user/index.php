@@ -2,28 +2,14 @@
   require_once('../../classes/user.php');
   require_once('../../lib/security.php');
   require_once('../../classes/purchase_record.php');
+  require_once('../../lib/user/function.php');
 
   $user = new User();
   $allUsers = $user->getAll();
   $purchaseRecord = new PurchaseRecord();
   $notCompletedFormerlyPurchaseRecords = $purchaseRecord->getNotCompletedFormerlyPurchaseRecords();
-  $amountOfMoney = array();
-  foreach ($notCompletedFormerlyPurchaseRecords as $purchaseRecord) {
-    if (array_key_exists($purchaseRecord['user_id'], $amountOfMoney)) {
-      $amountOfMoney[$purchaseRecord['user_id']] += $purchaseRecord['amount_of_money'];
-    } else {
-      $amountOfMoney[$purchaseRecord['user_id']] = $purchaseRecord['amount_of_money'];
-    }
-  }
-  $allUsersWithAmountOfMoney = array();
-  foreach ($amountOfMoney as $userId => $money) {
-    foreach ($allUsers as $user) {
-      if ($userId == $user['id']) {
-        $allUsersWithAmountOfMoney[$user['name']]['magnification'] = $user['magnification'];
-        $allUsersWithAmountOfMoney[$user['name']]['amount_of_money'] = $money;
-      }
-    }
-  }
+  $totalAmountOfEach = getTotalAmountOfEach($notCompletedFormerlyPurchaseRecords);
+  $allUsersWithAmountOfMoney = getAllUsersWithAmountOfMoney($totalAmountOfEach, $allUsers);
 ?>
 
 <!DOCTYPE html>

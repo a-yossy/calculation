@@ -2,15 +2,13 @@
   require_once('../../classes/purchase_record.php');
   require_once('../../classes/user.php');
   require_once('../../lib/security.php');
+  require_once('../../lib/purchase_record/function.php');
 
   $user = new User();
   $allUsers = $user->getAll();
   $purchaseRecord = new PurchaseRecord();
-  $formerlyPurchaseRecords = array();
-  foreach ($purchaseRecord->getFormerlyPurchaseRecords() as $purchaseRecord) {
-    $formerlyPurchaseRecords[$purchaseRecord['purchased_at']][$user->getById($purchaseRecord['user_id'])['name']]
-      = $purchaseRecord['amount_of_money'];
-  }
+  $formerlyPurchaseRecords = $purchaseRecord->getFormerlyPurchaseRecords();
+  $totalAmountOfEachByDate = getTotalAmountOfEachByDate($formerlyPurchaseRecords);
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +32,7 @@
           <th><?php echo h($user['name']) ?></th>
         <?php endforeach ?>
       </tr>
-      <?php foreach ($formerlyPurchaseRecords as $purchasedAt => $purchaseRecord): ?>
+      <?php foreach ($totalAmountOfEachByDate as $purchasedAt => $purchaseRecord): ?>
         <tr>
           <td><?php echo h($purchasedAt) ?></td>
           <?php foreach ($purchaseRecord as $name => $amountOfMoney): ?>
