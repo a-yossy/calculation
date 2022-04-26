@@ -25,7 +25,7 @@
     <a href="/public/user">TOPページ</a>
     <a href="/public/user/new.php">ユーザ登録</a>
     <a href="/public/purchase_record/new.php">購入履歴登録</a>
-    <a href="/public/purchase_record/index.php">購入履歴一覧</a>
+    <a href="/public/purchase_record/">購入履歴一覧</a>
   </p>
   <table>
     <tr>
