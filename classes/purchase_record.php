@@ -52,7 +52,7 @@ class PurchaseRecord extends Dbc {
   }
 
   public function purchaseRecordValidate($purchaseRecordParams, $allUser) {
-    $errorMessages = array();
+    $errorMessages = [];
     if (empty($purchaseRecordParams['purchased_at'])) {
       $errorMessages[] = '購入日時を入力して下さい';
     }

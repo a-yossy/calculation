@@ -25,7 +25,7 @@ class User extends Dbc {
   }
 
   public function userValidate($userParams) {
-    $errorMessages = array();
+    $errorMessages = [];
     if (empty($userParams['name'])) {
       $errorMessages[] = '名前を入力して下さい';
     }

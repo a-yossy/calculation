@@ -17,7 +17,7 @@
   <h2>グループ作成</h2>
   <form action="/public/organization/create.php" method="post">
     <div>
-      <p>名前</p>
+      <p>グループ名</p>
       <input type="text" name="name" required>
     </div>
     <div>
@@ -25,7 +25,7 @@
       <?php $userCount = 0 ?>
       <?php foreach ($allUsers as $user): ?>
         <div>
-          <label><input type="checkbox" name="users[]" value="<?php echo $user['id'] ?>"><?php echo h($user['name'].'-'.$user['magnification']) ?></label>
+          <label><input type="checkbox" name="user_ids[]" value="<?php echo $user['id'] ?>"><?php echo h($user['name'].'-'.$user['magnification']) ?></label>
         </div>
         <?php $userCount++ ?>
       <?php endforeach ?>
