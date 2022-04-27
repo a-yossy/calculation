@@ -18,29 +18,23 @@
   <title>購入履歴一覧</title>
 </head>
 <body>
-  <h1>計算アプリ</h1>
+  <?php include '../layout/header.php' ?>
   <h2>購入履歴一覧</h2>
-  <p>
-    <a href="/public/user">TOPページ</a>
-    <a href="/public/user/new.php">ユーザ登録</a>
-    <a href="/public/purchase_record/new.php">購入履歴登録</a>
-    <a href="/public/purchase_record/">購入履歴一覧</a>
-    <table border="1">
+  <table border="1">
+    <tr>
+      <th>日付</th>
+      <?php foreach ($allUsers as $user): ?>
+        <th><?php echo h($user['name']) ?></th>
+      <?php endforeach ?>
+    </tr>
+    <?php foreach ($totalAmountOfEachByDate as $purchasedAt => $purchaseRecord): ?>
       <tr>
-        <th>日付</th>
-        <?php foreach ($allUsers as $user): ?>
-          <th><?php echo h($user['name']) ?></th>
+        <td><?php echo h($purchasedAt) ?></td>
+        <?php foreach ($purchaseRecord as $name => $amountOfMoney): ?>
+          <td><?php echo h($amountOfMoney) ?></td>
         <?php endforeach ?>
       </tr>
-      <?php foreach ($totalAmountOfEachByDate as $purchasedAt => $purchaseRecord): ?>
-        <tr>
-          <td><?php echo h($purchasedAt) ?></td>
-          <?php foreach ($purchaseRecord as $name => $amountOfMoney): ?>
-            <td><?php echo h($amountOfMoney) ?></td>
-          <?php endforeach ?>
-        </tr>
-      <?php endforeach ?>
-    </table>
-  </p>
+    <?php endforeach ?>
+  </table>
 </body>
 </html>

@@ -5,14 +5,8 @@
   <title>ユーザ登録</title>
 </head>
 <body>
-  <h1>計算アプリ</h1>
+  <?php include '../layout/header.php' ?>
   <h2>ユーザ登録</h2>
-  <p>
-    <a href="/public/user">TOPページ</a>
-    <a href="/public/user/new.php">ユーザ登録</a>
-    <a href="/public/purchase_record/new.php">購入履歴登録</a>
-    <a href="/public/purchase_record/">購入履歴一覧</a>
-  </p>
   <form action="/public/user/create.php" method="post">
     <div>
       <p>名前</p>
