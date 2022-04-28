@@ -2,6 +2,7 @@
 
 require_once('dbc.php');
 require_once('user.php');
+require_once('affiliation.php');
 
 class Organization extends Dbc {
   protected $tableName = 'organization';
@@ -18,7 +19,8 @@ class Organization extends Dbc {
       $stmt->bindValue(':name', $organizationParams['name'], PDO::PARAM_STR);
       $stmt->execute();
       $organizationId = $dbh->lastInsertId();
-      $this->createAffilation($organizationId, $organizationParams['user_ids'], $dbh);
+      $affiliation = new Affiliation();
+      $affiliation->createAffiliation($organizationId, $organizationParams['user_ids'], $dbh);
       $dbh->commit();
     } catch (PDOException $e) {
       $dbh->rollBack();
@@ -54,23 +56,5 @@ class Organization extends Dbc {
     }
 
     return $errorMessages;
-  }
-
-  private function createAffilation($organizationId, $userIds, $dbhAffilation) {
-    $values = "";
-    foreach ($userIds as $userId) {
-      $values .= "(:organization_id_$userId, :user_id_$userId),";
-    }
-    $values = rtrim($values, ",");
-    $sql = "INSERT INTO
-              affiliation(organization_id, user_id)
-            VALUES
-              $values";
-    $stmt = $dbhAffilation->prepare($sql);
-    foreach ($userIds as $userId) {
-      $stmt->bindValue(":organization_id_$userId", (int)$organizationId, PDO::PARAM_INT);
-      $stmt->bindValue(":user_id_$userId", (int)$userId, PDO::PARAM_INT);
-    }
-    $stmt->execute();
   }
 }
