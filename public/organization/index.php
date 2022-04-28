@@ -1,11 +1,24 @@
+<?php
+  require_once('../../classes/organization.php');
+  require_once('../../lib/security.php');
+
+  $organization = new Organization();
+  $allOrganizations = $organization->getAll();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>グループ一覧</title>
+  <title>TOPページ</title>
 </head>
 <body>
   <?php include '../layout/header.php' ?>
-  <h2>グループ一覧</h2>
+  <h2>TOPページ</h2>
+  <ul>
+    <?php foreach ($allOrganizations as $organization): ?>
+      <li><a href="/public/organization/user?id=<?php echo $organization['id'] ?>"><?php echo h($organization['name']) ?></a></li>
+    <?php endforeach ?>
+  </ul>
 </body>
 </html>

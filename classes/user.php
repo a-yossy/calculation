@@ -24,6 +24,10 @@ class User extends Dbc {
     }
   }
 
+  public function getAllUsersByOrganizationId($organizationId) {
+    
+  }
+
   public function userValidate($userParams) {
     $errorMessages = [];
     if (empty($userParams['name'])) {

@@ -16,11 +16,11 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>TOPページ</title>
+  <title>ユーザ一覧</title>
 </head>
 <body>
   <?php include '../layout/header.php' ?>
-  <h2>TOPページ</h2>
+  <h2>ユーザ一覧</h2>
   <table>
     <tr>
       <th>名前</th>

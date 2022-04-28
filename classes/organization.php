@@ -11,21 +11,17 @@ class Organization extends Dbc {
               $this->tableName(name)
             VALUES
               (:name)";
-    $dbhOrganization = $this->dbConnect();
-    $dbhAffilation = $this->dbConnect();
-    $dbhOrganization->beginTransaction();
-    $dbhAffilation->beginTransaction();
+    $dbh = $this->dbConnect();
+    $dbh->beginTransaction();
     try {
-      $stmt = $dbhOrganization->prepare($sql);
+      $stmt = $dbh->prepare($sql);
       $stmt->bindValue(':name', $organizationParams['name'], PDO::PARAM_STR);
       $stmt->execute();
-      $organizationId = $dbhOrganization->lastInsertId();
-      $dbhOrganization->commit();
-      $this->createAffilation($organizationId, $organizationParams['user_ids'], $dbhAffilation);
-      $dbhAffilation->commit();
+      $organizationId = $dbh->lastInsertId();
+      $this->createAffilation($organizationId, $organizationParams['user_ids'], $dbh);
+      $dbh->commit();
     } catch (PDOException $e) {
-      $dbhOrganization->rollBack();
-      $dbhAffilation->rollBack();
+      $dbh->rollBack();
       exit($e->getMessage());
     }
   }
