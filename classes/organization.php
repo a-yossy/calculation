@@ -36,6 +36,13 @@ class Organization extends Dbc {
       $errorMessages[] = 'グループ名を入力して下さい';
     }
 
+    $alreadyExistingOrganizationNames = array_map(function ($organization) {
+      return $organization['name'];
+    }, $this->getAll());
+    if (in_array($organizationParams['name'], $alreadyExistingOrganizationNames)) {
+      $errorMessages[] = '既に存在するグループ名は入力出来ません';
+    }
+
     if (!array_key_exists('user_ids', $organizationParams)) {
       $errorMessages[] = 'ユーザを選択して下さい';
     } else {

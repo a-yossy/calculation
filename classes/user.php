@@ -42,6 +42,13 @@ class User extends Dbc {
       $errorMessages[] = '倍率は0から1の範囲で入力して下さい';
     }
 
+    $alreadyExistingUserNamesAndMagnifications = array_map(function ($user) {
+      return [$user['name'], $user['magnification']];
+    }, $this->getAll());
+    if (in_array([$userParams['name'], $userParams['magnification']], $alreadyExistingUserNamesAndMagnifications)) {
+      $errorMessages[] = '既に存在するユーザ名と倍率の組み合わせは入力出来ません';
+    }
+
     return $errorMessages;
   }
 }
