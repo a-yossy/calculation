@@ -34,13 +34,20 @@
       <?php foreach ($users as $user): ?>
         <th><?php echo h($user['name']) ?></th>
       <?php endforeach ?>
+      <th>決済</th>
     </tr>
     <?php foreach ($totalAmountOfEachByDate as $purchasedAt => $purchaseRecord): ?>
       <tr>
         <td><?php echo h($purchasedAt) ?></td>
-        <?php foreach ($purchaseRecord as $name => $amountOfMoney): ?>
+        <?php foreach ($purchaseRecord['users'] as $name => $amountOfMoney): ?>
           <td><?php echo h($amountOfMoney) ?></td>
         <?php endforeach ?>
+        <?php if ($purchaseRecord['is_completed']): ?>
+          <td>完了</td>
+        <?php else: ?>
+          <?php $purchaseRecordIds = implode(',', $purchaseRecord['purchase_record_ids']) ?>
+          <td><a href="/public/organization/users/purchase_record/update.php?organization_id=<?php echo $organizationId ?>&purchase_record_ids=<?php echo $purchaseRecordIds ?>">決済を完了にする</a></td>
+        <?php endif ?>
       </tr>
     <?php endforeach ?>
   </table>

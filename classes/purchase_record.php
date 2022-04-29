@@ -33,6 +33,28 @@ class PurchaseRecord extends Dbc {
     }
   }
 
+  public function updatePurchaseRecords($purchaseRecordIds) {
+    $sql = "UPDATE $this->tableName SET
+              is_completed = :is_completed
+            WHERE
+              id = :id";
+    $dbh = $this->dbConnect();
+    $dbh->beginTransaction();
+    try {
+      $stmt = $dbh->prepare($sql);
+      foreach ($purchaseRecordIds as $purchaseRecordId) {
+        $stmt->execute([
+          ':id' => $purchaseRecordId,
+          ':is_completed' => true
+        ]);
+      }
+      $dbh->commit();
+    } catch (PDOException $e) {
+      $dbh->rollBack();
+      exit($e->getMessage());
+    }
+  }
+
   public function getFormerlyPurchaseRecordsByUserIds($userIds) {
     $placeHolderOfUserIds = "";
     foreach ($userIds as $key => $userId) {
