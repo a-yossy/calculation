@@ -40,7 +40,8 @@ class User extends Dbc {
               user.id = affiliation.user_id
             WHERE
               affiliation.organization_id = :organization_id
-            ORDER BY user.id";
+            ORDER BY
+              user.id";
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':organization_id', (int)$organizationId, PDO::PARAM_INT);
     $stmt->execute();
