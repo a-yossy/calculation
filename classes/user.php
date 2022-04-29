@@ -24,8 +24,32 @@ class User extends Dbc {
     }
   }
 
-  public function getAllUsersByOrganizationId($organizationId) {
-    
+  public function getUsersByIds($organizationId) {
+    if (empty($organizationId)) {
+      exit('IDが不正です');
+    }
+
+    $dbh = $this->dbConnect();
+    $sql = "SELECT
+              user.*
+            FROM
+              user
+            INNER JOIN
+              affiliation
+            ON
+              user.id = affiliation.user_id
+            WHERE
+              affiliation.organization_id = :organization_id";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':organization_id', (int)$organizationId, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+
+    if (!$result) {
+      exit("$this->tableNameのデータがありません");
+    }
+
+    return $result;
   }
 
   public function userValidate($userParams) {
