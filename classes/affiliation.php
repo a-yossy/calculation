@@ -6,20 +6,16 @@ class Affiliation extends Dbc {
   protected $tableName = 'affiliation';
 
   public function createAffiliation($organizationId, $userIds, $dbh) {
-    $values = "";
-    foreach ($userIds as $userId) {
-      $values .= "(:organization_id_$userId, :user_id_$userId),";
-    }
-    $values = rtrim($values, ",");
     $sql = "INSERT INTO
               $this->tableName(organization_id, user_id)
             VALUES
-              $values";
+              (:organization_id, :user_id)";
     $stmt = $dbh->prepare($sql);
     foreach ($userIds as $userId) {
-      $stmt->bindValue(":organization_id_$userId", (int)$organizationId, PDO::PARAM_INT);
-      $stmt->bindValue(":user_id_$userId", (int)$userId, PDO::PARAM_INT);
+      $stmt->execute([
+        ':organization_id' => (int)$organizationId,
+        ':user_id' => (int)$userId
+      ]);
     }
-    $stmt->execute();
   }
 }

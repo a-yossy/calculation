@@ -1,6 +1,7 @@
 <?php
   require_once('../../../../classes/purchase_record.php');
   require_once('../../../../classes/user.php');
+  require_once('../../../../lib/security.php');
 
   $purchaseRecordParams = $_POST;
   $organizationId = $purchaseRecordParams['organization_id'];
