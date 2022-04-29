@@ -22,11 +22,16 @@ function getAllUsersWithAmountOfMoney($totalAmountOfEach, $users) {
         $allUsersWithAmountOfMoney[$user['name']]['amount_of_money'] = 0;
     }
   } else {
+    $sumOfMoney = 0;
+    foreach ($totalAmountOfEach as $money) {
+      $sumOfMoney += $money;
+    }
+
     foreach ($totalAmountOfEach as $userId => $money) {
       foreach ($users as $user) {
         if ($userId == $user['id']) {
           $allUsersWithAmountOfMoney[$user['name']]['magnification'] = $user['magnification'];
-          $allUsersWithAmountOfMoney[$user['name']]['amount_of_money'] = $money;
+          $allUsersWithAmountOfMoney[$user['name']]['amount_of_money'] = $money - $sumOfMoney * $user['magnification'];;
         }
       }
     }

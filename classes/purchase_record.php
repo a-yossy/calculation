@@ -11,14 +11,14 @@ class PurchaseRecord extends Dbc {
             VALUES
               (:user_id, :amount_of_money, :purchased_at)";
     $dbh = $this->dbConnect();
-    $personalExpenditures = $this->calculateAmount($purchaseRecordParams, $allUser);
+    $personalExpenditures = $this->getAmountOfMoneyOfEach($purchaseRecordParams, $allUser);
     $dbh->beginTransaction();
     try {
       $stmt = $dbh->prepare($sql);
       foreach ($personalExpenditures as $user_id => $amount_of_money) {
         $stmt->execute([
           ':user_id' => (int)$user_id,
-          ':amount_of_money' => $amount_of_money,
+          ':amount_of_money' => (int)$amount_of_money,
           ':purchased_at' => $purchaseRecordParams['purchased_at']
         ]);
       }
@@ -109,15 +109,10 @@ class PurchaseRecord extends Dbc {
     return $errorMessages;
   }
 
-  private function calculateAmount($purchaseRecordParams, $allUser) {
-    $sumOfMoney = 0;
+  private function getAmountOfMoneyOfEach($purchaseRecordParams, $allUser) {
+    $personalExpenditures = [];
     foreach ($allUser as $user) {
-      $sumOfMoney += $purchaseRecordParams["amount_of_money_{$user['id']}"];
-    }
-
-    $personalExpenditures = array();
-    foreach ($allUser as $user) {
-      $personalExpenditures[$user['id']] = $purchaseRecordParams["amount_of_money_{$user['id']}"] - $sumOfMoney * $user['magnification'];
+      $personalExpenditures[$user['id']] = $purchaseRecordParams["amount_of_money_{$user['id']}"];
     }
 
     return $personalExpenditures;
