@@ -43,5 +43,10 @@
       </tr>
     <?php endforeach ?>
   </table>
+  <div>
+    <?php if (count($notCompletedFormerlyPurchaseRecords) != 0): ?>
+      <a href="/public/organization/users/update.php?organization_id=<?php echo $organizationId ?>">完了にする</a>
+    <?php endif ?>
+  </div>
 </body>
 </html>

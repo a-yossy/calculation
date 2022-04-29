@@ -57,7 +57,14 @@ class PurchaseRecord extends Dbc {
       $placeHolderOfUserIds .= ":user_id_$key,";
     }
     $placeHolderOfUserIds = rtrim($placeHolderOfUserIds, ",");
-    $sql = "SELECT * FROM $this->tableName WHERE user_id IN ($placeHolderOfUserIds) ORDER BY purchased_at, user_id";
+    $sql = "SELECT * FROM
+              $this->tableName
+            WHERE
+              user_id
+            IN
+              ($placeHolderOfUserIds)
+            ORDER BY
+              purchased_at, user_id";
     $dbh = $this->dbConnect();
     $stmt = $dbh->prepare($sql);
     foreach ($userIds as $key => $userId) {
@@ -74,13 +81,37 @@ class PurchaseRecord extends Dbc {
       $placeHolderOfUserIds .= ":user_id_$key,";
     }
     $placeHolderOfUserIds = rtrim($placeHolderOfUserIds, ",");
-    $sql = "SELECT * FROM $this->tableName WHERE is_completed = :is_completed AND user_id IN ($placeHolderOfUserIds) ORDER BY purchased_at, user_id";
+    $sql = "SELECT * FROM
+              $this->tableName
+            WHERE
+              is_completed = :is_completed
+            AND
+              user_id
+            IN
+              ($placeHolderOfUserIds)
+            ORDER BY
+              purchased_at, user_id";
     $dbh = $this->dbConnect();
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':is_completed', false, PDO::PARAM_BOOL);
     foreach ($userIds as $key => $userId) {
       $stmt->bindValue(":user_id_$key", (int)$userId, PDO::PARAM_INT);
     }
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+  }
+
+  public function getAllNotCompletedFormerlyPurchaseRecords() {
+    $sql = "SELECT * FROM
+              $this->tableName
+            WHERE
+              is_completed = :is_completed
+            ORDER BY
+              purchased_at, user_id";
+    $dbh = $this->dbConnect();
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindValue(':is_completed', false, PDO::PARAM_BOOL);
     $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
