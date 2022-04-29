@@ -24,7 +24,7 @@ class User extends Dbc {
     }
   }
 
-  public function getUsersByIds($organizationId) {
+  public function getUsersByOrganizationId($organizationId) {
     if (empty($organizationId)) {
       exit('IDが不正です');
     }
@@ -39,7 +39,8 @@ class User extends Dbc {
             ON
               user.id = affiliation.user_id
             WHERE
-              affiliation.organization_id = :organization_id";
+              affiliation.organization_id = :organization_id
+            ORDER BY user.id";
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':organization_id', (int)$organizationId, PDO::PARAM_INT);
     $stmt->execute();

@@ -1,14 +1,15 @@
 <?php
-  require_once('../../classes/purchase_record.php');
-  require_once('../../classes/user.php');
+  require_once('../../../../classes/purchase_record.php');
+  require_once('../../../../classes/user.php');
 
-  $user = new User();
-  $allUser = $user->getAll();
   $purchaseRecordParams = $_POST;
+  $organizationId = $purchaseRecordParams['organization_id'];
+  $user = new User();
+  $users = $user->getUsersByOrganizationId($organizationId);
   $purchaseRecord = new PurchaseRecord();
-  $errorMessages = $purchaseRecord->purchaseRecordValidate($purchaseRecordParams, $allUser);
+  $errorMessages = $purchaseRecord->purchaseRecordValidate($purchaseRecordParams, $users);
   if (empty($errorMessages)) {
-    $purchaseRecord->purchaseRecordsCreate($purchaseRecordParams, $allUser);
+    $purchaseRecord->purchaseRecordsCreate($purchaseRecordParams, $users);
   }
 ?>
 
@@ -19,8 +20,9 @@
   <title>購入履歴作成</title>
 </head>
 <body>
-  <?php include '../layout/header.php' ?>
+  <?php include '../../../layout/header.php' ?>
   <h2>購入履歴作成</h2>
+  <?php include '../layout/url.php' ?>
   <div>
     <?php if (empty($errorMessages)): ?>
       <p>購入履歴を作成しました</p>

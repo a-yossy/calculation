@@ -9,7 +9,7 @@
   $organization = new Organization();
   $organization = $organization->getById($organizationId);
   $user = new User();
-  $users = $user->getUsersByIds($organizationId);
+  $users = $user->getUsersByOrganizationId($organizationId);
   $userIds = array_map(function ($user) {
     return $user['id'];
   }, $users);
@@ -28,6 +28,7 @@
 <body>
   <?php include '../../layout/header.php' ?>
   <h2><?php echo h($organization['name']) ?>のユーザ一覧</h2>
+  <?php include 'layout/url.php' ?>
   <table>
     <tr>
       <th>名前</th>

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../classes/user.php');
+require_once('/Applications/MAMP/htdocs/calculation/classes/user.php');
 
 function getTotalAmountOfEachByDate($formerlyPurchaseRecords) {
   $user = new User();

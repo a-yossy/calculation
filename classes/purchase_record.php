@@ -33,10 +33,19 @@ class PurchaseRecord extends Dbc {
     }
   }
 
-  public function getFormerlyPurchaseRecords() {
-    $sql = "SELECT * FROM $this->tableName ORDER BY purchased_at, user_id";
+  public function getFormerlyPurchaseRecordsByUserIds($userIds) {
+    $placeHolderOfUserIds = "";
+    foreach ($userIds as $key => $userId) {
+      $placeHolderOfUserIds .= ":user_id_$key,";
+    }
+    $placeHolderOfUserIds = rtrim($placeHolderOfUserIds, ",");
+    $sql = "SELECT * FROM $this->tableName WHERE user_id IN ($placeHolderOfUserIds) ORDER BY purchased_at, user_id";
     $dbh = $this->dbConnect();
-    $stmt = $dbh->query($sql);
+    $stmt = $dbh->prepare($sql);
+    foreach ($userIds as $key => $userId) {
+      $stmt->bindValue(":user_id_$key", (int)$userId, PDO::PARAM_INT);
+    }
+    $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
   }
