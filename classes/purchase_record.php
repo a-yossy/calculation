@@ -1,21 +1,21 @@
 <?php
 
 require_once('dbc.php');
+require_once('user.php');
 
 class PurchaseRecord extends Dbc {
   protected $tableName = 'purchase_record';
 
-  public function purchaseRecordsCreate($purchaseRecordParams, $allUser) {
+  public function purchaseRecordsCreate($purchaseRecordParams) {
     $sql = "INSERT INTO
               $this->tableName(user_id, amount_of_money, purchased_at)
             VALUES
               (:user_id, :amount_of_money, :purchased_at)";
     $dbh = $this->dbConnect();
-    $personalExpenditures = $this->getAmountOfMoneyOfEach($purchaseRecordParams, $allUser);
     $dbh->beginTransaction();
     try {
       $stmt = $dbh->prepare($sql);
-      foreach ($personalExpenditures as $user_id => $amount_of_money) {
+      foreach ($purchaseRecordParams['amount_of_money'] as $user_id => $amount_of_money) {
         $stmt->execute([
           ':user_id' => (int)$user_id,
           ':amount_of_money' => (int)$amount_of_money,
@@ -117,7 +117,7 @@ class PurchaseRecord extends Dbc {
     return $result;
   }
 
-  public function purchaseRecordValidate($purchaseRecordParams, $allUser) {
+  public function purchaseRecordValidate($purchaseRecordParams) {
     $errorMessages = [];
     if (empty($purchaseRecordParams['purchased_at'])) {
       $errorMessages[] = '購入日時を入力して下さい';
@@ -127,25 +127,18 @@ class PurchaseRecord extends Dbc {
       $errorMessages[] = '購入日時は今日以前から選択して下さい';
     }
 
-    foreach ($allUser as $user) {
-      if ($purchaseRecordParams["amount_of_money_{$user['id']}"] !== '0' && empty($purchaseRecordParams["amount_of_money_{$user['id']}"])) {
+    foreach ($purchaseRecordParams['amount_of_money'] as $user_id => $amount_of_money) {
+      $user = new User();
+      $user = $user->getById($user_id);
+      if ($amount_of_money !== '0' && empty($amount_of_money)) {
         $errorMessages[] = "{$user['name']}の購入金額を入力して下さい";
       }
 
-      if ($purchaseRecordParams["amount_of_money_{$user['id']}"] < 0) {
+      if ($amount_of_money < 0) {
         $errorMessages[] = "{$user['name']}の購入金額を0以上で入力して下さい";
       }
     }
 
     return $errorMessages;
-  }
-
-  private function getAmountOfMoneyOfEach($purchaseRecordParams, $allUser) {
-    $personalExpenditures = [];
-    foreach ($allUser as $user) {
-      $personalExpenditures[$user['id']] = $purchaseRecordParams["amount_of_money_{$user['id']}"];
-    }
-
-    return $personalExpenditures;
   }
 }

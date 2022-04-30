@@ -1,16 +1,13 @@
 <?php
   require_once('../../../../classes/purchase_record.php');
-  require_once('../../../../classes/user.php');
   require_once('../../../../lib/security.php');
 
   $purchaseRecordParams = $_POST;
   $organizationId = $purchaseRecordParams['organization_id'];
-  $user = new User();
-  $users = $user->getUsersByOrganizationId($organizationId);
   $purchaseRecord = new PurchaseRecord();
-  $errorMessages = $purchaseRecord->purchaseRecordValidate($purchaseRecordParams, $users);
+  $errorMessages = $purchaseRecord->purchaseRecordValidate($purchaseRecordParams);
   if (empty($errorMessages)) {
-    $purchaseRecord->purchaseRecordsCreate($purchaseRecordParams, $users);
+    $purchaseRecord->purchaseRecordsCreate($purchaseRecordParams);
   }
 ?>
 

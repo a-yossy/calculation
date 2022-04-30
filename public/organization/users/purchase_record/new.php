@@ -24,13 +24,12 @@
       <input type="date" name="purchased_at" required max="<?php echo date('Y-m-d') ?>">
     </div>
     <?php foreach($users as $user): ?>
-      <input type="hidden" name="user_id.<?php echo $user['id'] ?>" value="<?php echo $user['id'] ?>">
       <div>
         <h3><?php echo $user['name'] ?></h3>
       </div>
       <div>
         <p>購入金額</p>
-        <input type="number" name="amount_of_money.<?php echo $user['id'] ?>" min="0" required>
+        <input type="number" name="amount_of_money[<?php echo $user['id'] ?>]" min="0" required>
       </div>
     <?php endforeach ?>
     <div>
