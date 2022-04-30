@@ -1,11 +1,17 @@
 <?php
   require_once('../../../classes/purchase_record.php');
+  require_once('../../../classes/user.php');
   require_once('../../../lib/security.php');
   require_once('../../../lib/user/function.php');
 
   $organizationId = $_GET['organization_id'];
   $purchaseRecord = new PurchaseRecord();
-  $notCompletedFormerlyPurchaseRecords = $purchaseRecord->getAllNotCompletedFormerlyPurchaseRecords();
+  $user = new User();
+  $users = $user->getUsersByOrganizationId($organizationId);
+  $userIds = array_map(function ($user) {
+    return $user['id'];
+  }, $users);
+  $notCompletedFormerlyPurchaseRecords = $purchaseRecord->getNotCompletedFormerlyPurchaseRecordsByUserIds($userIds);
   $notCompletedFormerlyPurchaseRecordIds = array_map(function($purchaseRecord) {
     return $purchaseRecord['id'];
   }, $notCompletedFormerlyPurchaseRecords);

@@ -1,13 +1,10 @@
 <?php
-  require_once('../../../../classes/organization.php');
   require_once('../../../../classes/user.php');
   require_once('../../../../classes/purchase_record.php');
   require_once('../../../../lib/security.php');
   require_once('../../../../lib/purchase_record/function.php');
 
   $organizationId = $_GET['organization_id'];
-  $organization = new Organization();
-  $organization = $organization->getById($organizationId);
   $user = new User();
   $users = $user->getUsersByOrganizationId($organizationId);
   $userIds = array_map(function ($user) {
@@ -38,7 +35,7 @@
     <?php foreach ($totalAmountOfEachByDate as $purchasedAt => $purchaseRecord): ?>
       <tr>
         <td><?php echo h($purchasedAt) ?></td>
-        <?php foreach ($purchaseRecord['users'] as $name => $amountOfMoney): ?>
+        <?php foreach ($purchaseRecord['users'] as $amountOfMoney): ?>
           <td><?php echo h($amountOfMoney) ?></td>
         <?php endforeach ?>
       </tr>

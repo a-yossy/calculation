@@ -64,7 +64,7 @@ class PurchaseRecord extends Dbc {
             IN
               ($placeHolderOfUserIds)
             ORDER BY
-              purchased_at, user_id";
+              purchased_at, user_id, id";
     $dbh = $this->dbConnect();
     $stmt = $dbh->prepare($sql);
     foreach ($userIds as $key => $userId) {
@@ -90,28 +90,13 @@ class PurchaseRecord extends Dbc {
             IN
               ($placeHolderOfUserIds)
             ORDER BY
-              purchased_at, user_id";
+              purchased_at, user_id, id";
     $dbh = $this->dbConnect();
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(':is_completed', false, PDO::PARAM_BOOL);
     foreach ($userIds as $key => $userId) {
       $stmt->bindValue(":user_id_$key", (int)$userId, PDO::PARAM_INT);
     }
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    return $result;
-  }
-
-  public function getAllNotCompletedFormerlyPurchaseRecords() {
-    $sql = "SELECT * FROM
-              $this->tableName
-            WHERE
-              is_completed = :is_completed
-            ORDER BY
-              purchased_at, user_id";
-    $dbh = $this->dbConnect();
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindValue(':is_completed', false, PDO::PARAM_BOOL);
     $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
@@ -129,13 +114,13 @@ class PurchaseRecord extends Dbc {
 
     foreach ($purchaseRecordParams['amount_of_money'] as $user_id => $amount_of_money) {
       $user = new User();
-      $user = $user->getById($user_id);
+      $userData = $user->getById($user_id);
       if ($amount_of_money !== '0' && empty($amount_of_money)) {
-        $errorMessages[] = "{$user['name']}の購入金額を入力して下さい";
+        $errorMessages[] = "{$userData['name']}の購入金額を入力して下さい";
       }
 
       if ($amount_of_money < 0) {
-        $errorMessages[] = "{$user['name']}の購入金額を0以上で入力して下さい";
+        $errorMessages[] = "{$userData['name']}の購入金額を0以上で入力して下さい";
       }
     }
 

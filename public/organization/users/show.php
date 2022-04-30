@@ -7,7 +7,7 @@
 
   $organizationId = $_GET['organization_id'];
   $organization = new Organization();
-  $organization = $organization->getById($organizationId);
+  $organizationData = $organization->getById($organizationId);
   $user = new User();
   $users = $user->getUsersByOrganizationId($organizationId);
   $userIds = array_map(function ($user) {
@@ -16,18 +16,18 @@
   $purchaseRecord = new PurchaseRecord();
   $notCompletedFormerlyPurchaseRecords = $purchaseRecord->getNotCompletedFormerlyPurchaseRecordsByUserIds($userIds);
   $totalAmountOfEach = getTotalAmountOfEach($notCompletedFormerlyPurchaseRecords);
-  $usersWithAmountOfMoney = getAllUsersWithAmountOfMoney($totalAmountOfEach, $users);
+  $usersWithAmountOfMoney = getUsersWithAmountOfMoney($totalAmountOfEach, $users);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><?php echo h($organization['name']) ?>のユーザ一覧</title>
+  <title><?php echo h($organizationData['name']) ?>のユーザ一覧</title>
 </head>
 <body>
   <?php include '../../layout/header.php' ?>
-  <h2><?php echo h($organization['name']) ?>のユーザ一覧</h2>
+  <h2><?php echo h($organizationData['name']) ?>のユーザ一覧</h2>
   <?php include 'layout/url.php' ?>
   <table>
     <tr>

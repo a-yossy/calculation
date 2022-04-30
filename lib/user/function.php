@@ -13,7 +13,7 @@ function getTotalAmountOfEach($notCompletedFormerlyPurchaseRecords) {
   return $totalAmountOfEach;
 }
 
-function getAllUsersWithAmountOfMoney($totalAmountOfEach, $users) {
+function getUsersWithAmountOfMoney($totalAmountOfEach, $users) {
   $allUsersWithAmountOfMoney = [];
 
   if (empty($totalAmountOfEach)) {
