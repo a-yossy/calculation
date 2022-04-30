@@ -22,12 +22,10 @@
     </div>
     <div>
       <p>ユーザ選択</p>
-      <?php $userCount = 0 ?>
       <?php foreach ($allUsers as $user): ?>
         <div>
           <label><input type="checkbox" name="user_ids[]" value="<?php echo $user['id'] ?>"><?php echo h($user['name'].'-'.$user['magnification']) ?></label>
         </div>
-        <?php $userCount++ ?>
       <?php endforeach ?>
     </div>
     <div>
