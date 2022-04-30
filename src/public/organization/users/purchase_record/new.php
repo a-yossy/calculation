@@ -17,7 +17,7 @@
   <?php include '../../../layout/header.php' ?>
   <h2>購入履歴登録</h2>
   <?php include '../layout/url.php' ?>
-  <form action="/public/organization/users/purchase_record/create.php" method="post">
+  <form action="/src/public/organization/users/purchase_record/create.php" method="post">
     <input type="hidden" name="organization_id" value="<?php echo $organizationId ?>">
     <div>
       <p>購入日時</p>

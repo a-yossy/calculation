@@ -17,7 +17,7 @@
   <h2>TOPページ</h2>
   <ul>
     <?php foreach ($allOrganizations as $organization): ?>
-      <li><a href="/public/organization/users/show.php?organization_id=<?php echo $organization['id'] ?>"><?php echo h($organization['name']) ?></a></li>
+      <li><a href="/src/public/organization/users/show.php?organization_id=<?php echo $organization['id'] ?>"><?php echo h($organization['name']) ?></a></li>
     <?php endforeach ?>
   </ul>
 </body>

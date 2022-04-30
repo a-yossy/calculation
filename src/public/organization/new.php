@@ -15,7 +15,7 @@
 <body>
   <?php include '../layout/header.php' ?>
   <h2>グループ作成</h2>
-  <form action="/public/organization/create.php" method="post">
+  <form action="/src/public/organization/create.php" method="post">
     <div>
       <p>グループ名</p>
       <input type="text" name="name" required>

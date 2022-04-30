@@ -7,7 +7,7 @@
 <body>
   <?php include '../layout/header.php' ?>
   <h2>ユーザ登録</h2>
-  <form action="/public/user/create.php" method="post">
+  <form action="/src/public/user/create.php" method="post">
     <div>
       <p>名前</p>
       <input type="text" name="name" required>
