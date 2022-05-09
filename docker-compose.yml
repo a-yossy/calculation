@@ -12,3 +12,10 @@ services:
     ports:
       - "3306:3306"
     env_file: mysql/db.env
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/mysql
+
+volumes:
+  db-data:
