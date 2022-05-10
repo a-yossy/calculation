@@ -1,5 +1,5 @@
 <?php
-  require_once('/Applications/MAMP/htdocs/calculation/src/classes/organization.php');
+  require_once('/var/www/html/src/classes/organization.php');
 
   $organization = new Organization();
   $organization = $organization->getById($organizationId);

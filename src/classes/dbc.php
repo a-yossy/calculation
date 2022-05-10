@@ -1,6 +1,6 @@
 <?php
 
-require_once('/Applications/MAMP/htdocs/calculation/src/config/env.php');
+require_once('/var/www/html/src/config/env.php');
 
 class Dbc{
   protected $tableName;
